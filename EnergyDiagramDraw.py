@@ -1,4 +1,5 @@
 import re
+import sys
 
 from DataSet import DataSet, SKIP
 
@@ -8,9 +9,7 @@ length = 30
 padding = 40
 page_width = 540
 page_height = 720
-datasets = []
 space = 0
-current_line = 0
 
 
 def x(index: int) -> float:
@@ -75,68 +74,71 @@ def preamble(p: str):
     raise Exception(f'Wrong preamble: {p}')
 
 
-s = ''
-try:
-    input_file = open('input.edf', 'r')
-    s = input_file.readline().strip('\n')
-    current_line += 1
-    while s.startswith('%'):
-        preamble(s)
+def main():
+    global space
+    current_line = 0
+    datasets = []
+    try:
+        input_file = open('input.edf', 'r')
         s = input_file.readline().strip('\n')
         current_line += 1
-
-    while True:
-        if s.startswith('%'):
-            raise Exception(f'''Wrong syntax at line {current_line}: '{s}' should write in preamble''')
-        if s.startswith('#'):
-            pass
-        elif s == '':
+        while s.startswith('%'):
+            preamble(s)
             s = input_file.readline().strip('\n')
             current_line += 1
-            if s == '':
-                break
+
+        while True:
+            if s.startswith('%'):
+                raise Exception(f'''Wrong syntax at line {current_line}: '{s}' should write in preamble''')
+            if s.startswith('#'):
+                pass
+            elif s == '':
+                s = input_file.readline().strip('\n')
+                current_line += 1
+                if s == '':
+                    break
+                else:
+                    continue
             else:
-                continue
-        else:
-            dataset = DataSet()
-            dataset.set_data(s)
+                dataset = DataSet()
+                dataset.set_data(s)
+                s = input_file.readline().strip('\n')
+                current_line += 1
+                if s != '':
+                    dataset.set_labels(s)
+                datasets.append(dataset)
+
             s = input_file.readline().strip('\n')
             current_line += 1
-            if s != '':
-                dataset.set_labels(s)
-            datasets.append(dataset)
 
-        s = input_file.readline().strip('\n')
-        current_line += 1
+        print('end')
+        if len(datasets) == 0:
+            raise Exception('''Missing data.
+    --- At least one set of data must be provided.''')
+        count = datasets[0].count
+        delta_energy = datasets[0].delta_energy
+        max_energy = datasets[0].max_energy
+        for dataset in datasets:
+            count = max(count, dataset.count)
+            delta_energy = max(delta_energy, dataset.delta_energy)
+            max_energy = max(max_energy, dataset.max_energy)
+        space = (width - length * count) / (count - 1)
 
-    print('end')
-    if len(datasets) == 0:
-        raise Exception('''Missing data.
---- At least one set of data must be provided.''')
-    count = datasets[0].count
-    delta_energy = datasets[0].delta_energy
-    max_energy = datasets[0].max_energy
-    for dataset in datasets:
-        count = max(count, dataset.count)
-        delta_energy = max(delta_energy, dataset.delta_energy)
-        max_energy = max(max_energy, dataset.max_energy)
-    space = (width - length * count) / (count - 1)
+        diagram = ''
+        for dataset in datasets:
+            data = dataset.data
+            current = -1
+            for i in range(dataset.count):
+                if data[i] == SKIP:
+                    continue
+                if current != -1:
+                    diagram += draw_dashed_line(x(current) + length, y(data[current], delta_energy, max_energy),
+                                                x(i), y(data[i], delta_energy, max_energy))
+                current = i
+                diagram += draw_bold_line(x(i), y(data[i], delta_energy, max_energy))
 
-    diagram = ''
-    for dataset in datasets:
-        data = dataset.data
-        current = -1
-        for i in range(dataset.count):
-            if data[i] == SKIP:
-                continue
-            if current != -1:
-                diagram += draw_dashed_line(x(current) + length, y(data[current], delta_energy, max_energy),
-                                            x(i), y(data[i], delta_energy, max_energy))
-            current = i
-            diagram += draw_bold_line(x(i), y(data[i], delta_energy, max_energy))
-
-    output_file = open('output.cdxml', 'w')
-    output_file.write(f'''<?xml version="1.0" encoding="UTF-8" ?>
+        output_file = open('output.cdxml', 'w')
+        output_file.write(f'''<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
 <CDXML
  ><colortable>
@@ -162,6 +164,10 @@ try:
 >
 {diagram}
 </page></CDXML>''')
-except Exception as e:
-    print(f'''Error at line {current_line}: {e}''')
-    raise
+    except Exception as e:
+        print(f'''Error at line {current_line}: {e}''')
+        raise
+
+
+if __name__ == '__main__':
+    sys.exit(main())
