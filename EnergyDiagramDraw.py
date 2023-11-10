@@ -11,6 +11,9 @@ page_width = 540
 page_height = 720
 space = 0
 
+NUMBER_FONT = 3
+LABEL_FONT = 20
+
 
 def x(index: int) -> float:
     return padding + index * space + length * index
@@ -33,6 +36,16 @@ def draw_dashed_line(x1: float, y1: float, x2: float, y2: float) -> str:
 BoundingBox="{x1} {y1} {x2} {y2}"
 LineType="Dashed"
 GraphicType="Line" />
+'''
+
+
+def draw_text(text: str, x: float, y: float, font: int, size: int, bold: bool = False) -> str:
+    return f'''<t
+ p="{x} {y}"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="{font}" size="{size}" color="0" {'face="1"' if bold else ''}>{text}</s></t>
 '''
 
 
@@ -146,6 +159,11 @@ def main(argv=None):
                                                 x(i), y(data[i], delta_energy, max_energy))
                 current = i
                 diagram += draw_bold_line(x(i), y(data[i], delta_energy, max_energy))
+                diagram += draw_text(str(data[i]), x(i) + length / 2, y(data[i], delta_energy, max_energy) - 5,
+                                     NUMBER_FONT, 10)
+                if dataset.labels is not None:
+                    diagram += draw_text(str(dataset.labels[i]), x(i) + length / 2,
+                                         y(data[i], delta_energy, max_energy) + 15, LABEL_FONT, 12, bold=True)
 
         output_file = open(output_filename, 'w')
         output_file.write(f'''<?xml version="1.0" encoding="UTF-8" ?>
@@ -161,7 +179,8 @@ def main(argv=None):
 <color r="0" g="0" b="1"/>
 <color r="1" g="0" b="1"/>
 </colortable><fonttable>
-<font id="3" charset="iso-8859-1" name="Arial"/>
+<font id="{NUMBER_FONT}" charset="iso-8859-1" name="Arial"/>
+<font id="{LABEL_FONT}" charset="iso-8859-1" name="Times New Roman"/>
 </fonttable><page
  id="5"
  BoundingBox="0 0 {max(width + 2 * padding, page_width)} {max(height + 2 * padding, page_height)}"
