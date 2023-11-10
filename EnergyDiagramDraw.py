@@ -16,11 +16,11 @@ LABEL_FONT = 20
 
 
 def x(index: int) -> float:
-    return padding + index * space + length * index
+    return round(padding + index * space + length * index, 2)
 
 
 def y(data: float, delta: float, max: float) -> float:
-    return padding + (max - data) * height / delta
+    return round(padding + (max - data) * height / delta, 2)
 
 
 def draw_bold_line(x: float, y: float) -> str:
