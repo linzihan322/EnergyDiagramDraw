@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
+<CDXML
+ ><colortable>
+<color r="1" g="1" b="1"/>
+<color r="0" g="0" b="0"/>
+<color r="1" g="0" b="0"/>
+<color r="1" g="1" b="0"/>
+<color r="0" g="1" b="0"/>
+<color r="0" g="1" b="1"/>
+<color r="0" g="0" b="1"/>
+<color r="1" g="0" b="1"/>
+</colortable><fonttable>
+<font id="3" charset="iso-8859-1" name="Arial"/>
+<font id="20" charset="iso-8859-1" name="Times New Roman"/>
+</fonttable><page
+ id="5"
+ BoundingBox="0 0 600 720"
+ Width="600"
+ Height="720"
+ HeaderPosition="36"
+ FooterPosition="36"
+ PrintTrimMarks="yes"
+ DrawingSpace="poster"
+>
+<graphic
+BoundingBox="50.0 200.0 80.0 200.0"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="65.0 195.0"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >10.0</s></t>
+<t
+ p="65.0 215.0"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">you</s></t>
+<graphic
+BoundingBox="80.0 200.0 144.0 162.5"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="144.0 162.5 174.0 162.5"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="159.0 157.5"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >20.0</s></t>
+<t
+ p="159.0 177.5"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">can</s></t>
+<graphic
+BoundingBox="174.0 162.5 238.0 125.0"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="238.0 125.0 268.0 125.0"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="253.0 120.0"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >30.0</s></t>
+<t
+ p="253.0 140.0"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">skip</s></t>
+<graphic
+BoundingBox="268.0 125.0 332.0 87.5"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="332.0 87.5 362.0 87.5"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="347.0 82.5"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >40.0</s></t>
+<t
+ p="347.0 102.5"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">some</s></t>
+<graphic
+BoundingBox="362.0 87.5 426.0 50.0"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="426.0 50.0 456.0 50.0"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="441.0 45.0"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >50.0</s></t>
+<t
+ p="441.0 65.0"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">data</s></t>
+<graphic
+BoundingBox="144.0 218.75 174.0 218.75"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="159.0 213.75"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >5.0</s></t>
+<graphic
+BoundingBox="174.0 218.75 332.0 256.25"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="332.0 256.25 362.0 256.25"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="347.0 251.25"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >-5.0</s></t>
+<graphic
+BoundingBox="362.0 256.25 426.0 181.25"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="426.0 181.25 456.0 181.25"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="441.0 176.25"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >15.0</s></t>
+<graphic
+BoundingBox="456.0 181.25 520.0 256.25"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="520.0 256.25 550.0 256.25"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="535.0 251.25"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >-5.0</s></t>
+
+</page></CDXML>

@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
+<CDXML
+ ><colortable>
+<color r="1" g="1" b="1"/>
+<color r="0" g="0" b="0"/>
+<color r="1" g="0" b="0"/>
+<color r="1" g="1" b="0"/>
+<color r="0" g="1" b="0"/>
+<color r="0" g="1" b="1"/>
+<color r="0" g="0" b="1"/>
+<color r="1" g="0" b="1"/>
+</colortable><fonttable>
+<font id="3" charset="iso-8859-1" name="Arial"/>
+<font id="20" charset="iso-8859-1" name="Times New Roman"/>
+</fonttable><page
+ id="5"
+ BoundingBox="0 0 580 720"
+ Width="580"
+ Height="720"
+ HeaderPosition="36"
+ FooterPosition="36"
+ PrintTrimMarks="yes"
+ DrawingSpace="poster"
+>
+<graphic
+BoundingBox="40.0 68.39 70.0 68.39"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="55.0 63.39"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >41.0</s></t>
+<t
+ p="55.0 83.39"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">0</s></t>
+<graphic
+BoundingBox="70.0 68.39 87.0 182.49"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="87.0 182.49 117.0 182.49"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="102.0 177.49"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >0.0</s></t>
+<t
+ p="102.0 197.49"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">1-start</s></t>
+<graphic
+BoundingBox="117.0 182.49 134.0 80.35"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="134.0 80.35 164.0 80.35"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="149.0 75.35"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >36.7</s></t>
+<t
+ p="149.0 95.35"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">1*</s></t>
+<graphic
+BoundingBox="164.0 80.35 181.0 140.46"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="181.0 140.46 211.0 140.46"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="196.0 135.46"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >15.1</s></t>
+<t
+ p="196.0 155.46"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">1-end</s></t>
+<graphic
+BoundingBox="211.0 140.46 228.0 129.33"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="228.0 129.33 258.0 129.33"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="243.0 124.33000000000001"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >19.1</s></t>
+<t
+ p="243.0 144.33"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">2-start</s></t>
+<graphic
+BoundingBox="258.0 129.33 275.0 40.0"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="275.0 40.0 305.0 40.0"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="290.0 35.0"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >51.2</s></t>
+<t
+ p="290.0 55.0"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">2*</s></t>
+<graphic
+BoundingBox="305.0 40.0 322.0 87.87"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="322.0 87.87 352.0 87.87"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="337.0 82.87"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >34.0</s></t>
+<t
+ p="337.0 102.87"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">2-end</s></t>
+<graphic
+BoundingBox="352.0 87.87 369.0 109.02"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="369.0 109.02 399.0 109.02"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="384.0 104.02"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >26.4</s></t>
+<t
+ p="384.0 124.02"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">3-start</s></t>
+<graphic
+BoundingBox="399.0 109.02 416.0 70.61"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="416.0 70.61 446.0 70.61"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="431.0 65.61"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >40.2</s></t>
+<t
+ p="431.0 85.61"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">3*</s></t>
+<graphic
+BoundingBox="446.0 70.61 463.0 190.0"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="463.0 190.0 493.0 190.0"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="478.0 185.0"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >-2.7</s></t>
+<t
+ p="478.0 205.0"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">3-end</s></t>
+<graphic
+BoundingBox="493.0 190.0 510.0 85.64"
+LineType="Dashed"
+GraphicType="Line" />
+<graphic
+BoundingBox="510.0 85.64 540.0 85.64"
+LineType="Bold"
+GraphicType="Line" />
+<t
+ p="525.0 80.64"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="3" size="10" color="0" >34.8</s></t>
+<t
+ p="525.0 100.64"
+ CaptionJustification="Center"
+ Justification="Center"
+ LineHeight="auto"
+><s font="20" size="12" color="0" face="1">4</s></t>
+
+</page></CDXML>
