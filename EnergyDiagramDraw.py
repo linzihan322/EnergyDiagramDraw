@@ -74,12 +74,22 @@ def preamble(p: str):
     raise Exception(f'Wrong preamble: {p}')
 
 
-def main():
+def main(argv=None):
     global space
     current_line = 0
     datasets = []
     try:
-        input_file = open('input.edf', 'r')
+        if argv is None:
+            argv = sys.argv[1:]
+        if len(argv) == 0:
+            raise Exception('Input file required.')
+        if len(argv) > 2:
+            raise Exception('Too many parameters.')
+        input_filename = argv[0]
+        output_filename = re.sub(r'\.edf$', '', argv[1] if len(argv) == 2 else input_filename)
+        if not output_filename.endswith('.cdxml'):
+            output_filename += '.cdxml'
+        input_file = open(input_filename, 'r')
         s = input_file.readline().strip('\n')
         current_line += 1
         while s.startswith('%'):
@@ -137,7 +147,7 @@ def main():
                 current = i
                 diagram += draw_bold_line(x(i), y(data[i], delta_energy, max_energy))
 
-        output_file = open('output.cdxml', 'w')
+        output_file = open(output_filename, 'w')
         output_file.write(f'''<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
 <CDXML
