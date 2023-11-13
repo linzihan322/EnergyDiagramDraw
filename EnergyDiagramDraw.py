@@ -105,40 +105,40 @@ def main(argv=None):
         output_filename = re.sub(r'\.edf$', '', argv[1] if len(argv) == 2 else input_filename)
         if not output_filename.endswith('.cdxml'):
             output_filename += '.cdxml'
-        input_file = open(input_filename, 'r')
-        print(f'''Reading file '{input_filename}'...''')
-        s = input_file.readline().strip('\n')
-        current_line += 1
-        while s.startswith('%'):
-            preamble(current_line, s)
+        with open(input_filename, 'r') as input_file:
+            print(f'''Reading file '{input_filename}'...''')
             s = input_file.readline().strip('\n')
             current_line += 1
-
-        while True:
-            if s.startswith('%'):
-                raise EDDrawPreambleParserException(current_line, f'''\'{s}' should write in preamble part''')
-            if s.startswith('#'):
-                pass
-            elif s == '':
+            while s.startswith('%'):
+                preamble(current_line, s)
                 s = input_file.readline().strip('\n')
                 current_line += 1
-                if s == '':
-                    break
+
+            while True:
+                if s.startswith('%'):
+                    raise EDDrawPreambleParserException(current_line, f'''\'{s}' should write in preamble part''')
+                if s.startswith('#'):
+                    pass
+                elif s == '':
+                    s = input_file.readline().strip('\n')
+                    current_line += 1
+                    if s == '':
+                        break
+                    else:
+                        continue
                 else:
-                    continue
-            else:
-                dataset = DataSet(current_line)
-                dataset.set_data(s)
-                print(f'Parsing data at line {current_line}...')
+                    dataset = DataSet(current_line)
+                    dataset.set_data(s)
+                    print(f'Parsing data at line {current_line}...')
+                    s = input_file.readline().strip('\n')
+                    current_line += 1
+                    if s != '':
+                        dataset.set_labels(s)
+                        print(f'Parsing labels at line {current_line}...')
+                    datasets.append(dataset)
+
                 s = input_file.readline().strip('\n')
                 current_line += 1
-                if s != '':
-                    dataset.set_labels(s)
-                    print(f'Parsing labels at line {current_line}...')
-                datasets.append(dataset)
-
-            s = input_file.readline().strip('\n')
-            current_line += 1
 
         print(f'''Finished reading the file '{input_filename}'.''')
         if len(datasets) == 0:
@@ -172,8 +172,8 @@ def main(argv=None):
                     diagram += draw_text(str(dataset.labels[i]), x(i) + length / 2,
                                          y(data[i], delta_energy, max_energy) + 15, LABEL_FONT, 12, bold=True)
 
-        output_file = open(output_filename, 'w')
-        output_file.write(f'''<?xml version="1.0" encoding="UTF-8" ?>
+        with open(output_filename, 'w') as output_file:
+            output_file.write(f'''<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE CDXML SYSTEM "http://www.cambridgesoft.com/xml/cdxml.dtd" >
 <CDXML
  ><colortable>
