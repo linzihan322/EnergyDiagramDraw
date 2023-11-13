@@ -2,6 +2,7 @@ import re
 import sys
 
 from DataSet import DataSet, SKIP
+from EDDrawException import *
 
 width = 400
 height = 300
@@ -49,7 +50,7 @@ def draw_text(text: str, x: float, y: float, font: int, size: int, bold: bool = 
 '''
 
 
-def preamble(p: str):
+def preamble(source_line, p: str):
     global width, height, length, padding, page_width, page_height
     try:
         matches = re.match(r'%(?:w|width)=(\d+)', p, re.I)
@@ -83,8 +84,10 @@ def preamble(p: str):
             print(f'Set padding: {padding}')
             return
     except ValueError:
-        raise Exception(f'Wrong preamble value: {p}')
-    raise Exception(f'Wrong preamble: {p}')
+        raise EDDrawPreambleParserException(source_line, f'''Wrong preamble value: {p}
+--- Please input an integer, and make sure there are no spaces before or after '='.''')
+    raise EDDrawPreambleParserException(source_line, f'''\'{p}' is not a valid preamble statement.
+--- Please read 'README.md'.''')
 
 
 def main(argv=None):
@@ -95,9 +98,9 @@ def main(argv=None):
         if argv is None:
             argv = sys.argv[1:]
         if len(argv) == 0:
-            raise Exception('Input file required.')
+            raise EDDrawInternalException('Input file required.')
         if len(argv) > 2:
-            raise Exception('Too many parameters.')
+            raise EDDrawInternalException('Too many parameters.')
         input_filename = argv[0]
         output_filename = re.sub(r'\.edf$', '', argv[1] if len(argv) == 2 else input_filename)
         if not output_filename.endswith('.cdxml'):
@@ -106,13 +109,13 @@ def main(argv=None):
         s = input_file.readline().strip('\n')
         current_line += 1
         while s.startswith('%'):
-            preamble(s)
+            preamble(current_line, s)
             s = input_file.readline().strip('\n')
             current_line += 1
 
         while True:
             if s.startswith('%'):
-                raise Exception(f'''Wrong syntax at line {current_line}: '{s}' should write in preamble''')
+                raise EDDrawPreambleParserException(current_line, f'''\'{s}' should write in preamble part''')
             if s.startswith('#'):
                 pass
             elif s == '':
@@ -123,7 +126,7 @@ def main(argv=None):
                 else:
                     continue
             else:
-                dataset = DataSet()
+                dataset = DataSet(current_line)
                 dataset.set_data(s)
                 s = input_file.readline().strip('\n')
                 current_line += 1
@@ -136,8 +139,8 @@ def main(argv=None):
 
         print('end')
         if len(datasets) == 0:
-            raise Exception('''Missing data.
-    --- At least one set of data must be provided.''')
+            raise EDDrawDataParserException(-1, '''Missing data.
+--- At least one set of data must be provided.''')
         count = datasets[0].count
         delta_energy = datasets[0].delta_energy
         max_energy = datasets[0].max_energy
@@ -193,8 +196,10 @@ def main(argv=None):
 >
 {diagram}
 </page></CDXML>''')
+    except EDDrawException as e:
+        print(e)
     except Exception as e:
-        print(f'''Error at line {current_line}: {e}''')
+        print(f'''Unknown error: {e}''')
         raise
 
 
