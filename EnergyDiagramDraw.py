@@ -106,6 +106,7 @@ def main(argv=None):
         if not output_filename.endswith('.cdxml'):
             output_filename += '.cdxml'
         input_file = open(input_filename, 'r')
+        print(f'''Reading file '{input_filename}'...''')
         s = input_file.readline().strip('\n')
         current_line += 1
         while s.startswith('%'):
@@ -128,16 +129,18 @@ def main(argv=None):
             else:
                 dataset = DataSet(current_line)
                 dataset.set_data(s)
+                print(f'Parsing data at line {current_line}...')
                 s = input_file.readline().strip('\n')
                 current_line += 1
                 if s != '':
                     dataset.set_labels(s)
+                    print(f'Parsing labels at line {current_line}...')
                 datasets.append(dataset)
 
             s = input_file.readline().strip('\n')
             current_line += 1
 
-        print('end')
+        print(f'''Finished reading the file '{input_filename}'.''')
         if len(datasets) == 0:
             raise EDDrawDataParserException(-1, '''Missing data.
 --- At least one set of data must be provided.''')
@@ -150,6 +153,7 @@ def main(argv=None):
             max_energy = max(max_energy, dataset.max_energy)
         space = (width - length * count) / (count - 1)
 
+        print('Generating energy diagram...')
         diagram = ''
         for dataset in datasets:
             data = dataset.data
@@ -196,6 +200,10 @@ def main(argv=None):
 >
 {diagram}
 </page></CDXML>''')
+        print(f'''Successful output file '{output_filename}'.''')
+        print('Finished.')
+        print('-------------------------------------')
+        print('EnergyDiagramDraw by Zihan Lin @ USTC')
     except EDDrawException as e:
         print(e)
     except Exception as e:
