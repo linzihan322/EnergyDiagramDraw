@@ -90,8 +90,8 @@ def preamble(source_line, p: str):
 --- Please read 'README.md'.''')
 
 
-def parse_settings(source_line, settings_str: str) -> Settings:
-    settings = Settings()
+def parse_settings(source_line, settings_str: str, current_settings: Settings) -> Settings:
+    settings = current_settings
     splits = settings_str.removeprefix('#').split(' ')
     for s in splits:
         matches = re.match(r'decimal=(\d)', s, re.I)
@@ -133,7 +133,7 @@ def main(argv=None):
                 if s.startswith('%'):
                     raise EDDrawPreambleParserException(current_line, f'''\'{s}' should write in preamble part''')
                 if s.startswith('#'):
-                    settings = parse_settings(current_line, s)
+                    settings = parse_settings(current_line, s, settings)
                     print(f'Current settings is {settings}')
                 elif s == '':
                     s = input_file.readline().strip('\n')
