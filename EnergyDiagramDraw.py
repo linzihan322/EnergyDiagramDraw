@@ -10,6 +10,7 @@ length = 30
 padding = 40
 page_width = 540
 page_height = 720
+reset = False
 space = 0
 
 NUMBER_FONT = 3
@@ -51,7 +52,7 @@ def draw_text(text: str, x: float, y: float, font: int, size: int, bold: bool = 
 
 
 def preamble(source_line, p: str):
-    global width, height, length, padding, page_width, page_height
+    global width, height, length, padding, page_width, page_height, reset
     try:
         matches = re.match(r'%(?:w|width)=(\d+)', p, re.I)
         if matches:
@@ -82,6 +83,11 @@ def preamble(source_line, p: str):
         if matches:
             padding = int(matches.group(1))
             print(f'Set padding: {padding}')
+            return
+        matches = re.match(r'%reset(?:settings)?', p, re.I)
+        if matches:
+            reset = True
+            print(f'Set reset-settings: {reset}')
             return
     except ValueError:
         raise EDDrawPreambleParserException(source_line, f'''Wrong preamble value: {p}
@@ -133,7 +139,7 @@ def main(argv=None):
                 if s.startswith('%'):
                     raise EDDrawPreambleParserException(current_line, f'''\'{s}' should write in preamble part''')
                 if s.startswith('#'):
-                    settings = parse_settings(current_line, s, settings)
+                    settings = parse_settings(current_line, s, Settings() if reset else settings)
                     print(f'Current settings is {settings}')
                 elif s == '':
                     s = input_file.readline().strip('\n')
@@ -143,6 +149,8 @@ def main(argv=None):
                     else:
                         continue
                 else:
+                    if reset:
+                        settings = Settings()
                     dataset = DataSet(current_line, settings)
                     dataset.set_data(s)
                     print(f'Parsing data at line {current_line}...')
