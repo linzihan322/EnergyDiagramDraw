@@ -104,6 +104,10 @@ def parse_settings(source_line, settings_str: str, current_settings: Settings) -
         if matches:
             settings.decimal = int(matches.group(1))
             continue
+        matches = re.match(r'labelnormal', s, re.I)
+        if matches:
+            settings.label_normal = True
+            continue
         raise EDDrawSettingsParserException(source_line, f'''\'{s}' is not a valid setting.
 --- Please read 'README.md'.''')
     print(f'Parsing settings at line {source_line}...')
@@ -194,7 +198,8 @@ def main(argv=None):
                                      y(data[i], delta_energy, max_energy) - 5, NUMBER_FONT, 10)
                 if dataset.labels is not None:
                     diagram += draw_text(str(dataset.labels[i]), x(i) + length / 2,
-                                         y(data[i], delta_energy, max_energy) + 15, LABEL_FONT, 12, bold=True)
+                                         y(data[i], delta_energy, max_energy) + 15, LABEL_FONT, 12,
+                                         bold=not dataset.settings.label_normal)
 
         with open(output_filename, 'w') as output_file:
             output_file.write(f'''<?xml version="1.0" encoding="UTF-8" ?>
