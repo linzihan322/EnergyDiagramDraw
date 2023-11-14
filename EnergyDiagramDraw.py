@@ -150,6 +150,8 @@ def main(argv=None):
                     settings = parse_settings(current_line, s, Settings() if reset else settings)
                     print(f'Current settings is {settings}')
                 elif s == '':
+                    if reset:
+                        settings = Settings()
                     s = input_file.readline().strip('\n')
                     current_line += 1
                     if s == '':
@@ -157,8 +159,6 @@ def main(argv=None):
                     else:
                         continue
                 else:
-                    if reset:
-                        settings = Settings()
                     dataset = DataSet(current_line, settings)
                     dataset.set_data(s)
                     print(f'Parsing data at line {current_line}...')
