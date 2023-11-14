@@ -1,7 +1,7 @@
 import re
 import sys
 
-from DataSet import DataSet, SKIP
+from DataSet import DataSet, SKIP, Settings
 from EDDrawException import *
 
 width = 400
@@ -90,6 +90,20 @@ def preamble(source_line, p: str):
 --- Please read 'README.md'.''')
 
 
+def parse_settings(source_line, settings_str: str) -> Settings:
+    settings = Settings()
+    splits = settings_str.removeprefix('#').split(' ')
+    for s in splits:
+        matches = re.match(r'decimal=(\d)', s, re.I)
+        if matches:
+            settings.decimal = int(matches.group(1))
+            continue
+        raise EDDrawSettingsParserException(source_line, f'''\'{s}' is not a valid setting.
+--- Please read 'README.md'.''')
+    print(f'Parsing settings at line {source_line}...')
+    return settings
+
+
 def main(argv=None):
     global space
     current_line = 0
@@ -114,11 +128,13 @@ def main(argv=None):
                 s = input_file.readline().strip('\n')
                 current_line += 1
 
+            settings = Settings()
             while True:
                 if s.startswith('%'):
                     raise EDDrawPreambleParserException(current_line, f'''\'{s}' should write in preamble part''')
                 if s.startswith('#'):
-                    pass
+                    settings = parse_settings(current_line, s)
+                    print(f'Current settings is {settings}')
                 elif s == '':
                     s = input_file.readline().strip('\n')
                     current_line += 1
@@ -127,7 +143,7 @@ def main(argv=None):
                     else:
                         continue
                 else:
-                    dataset = DataSet(current_line)
+                    dataset = DataSet(current_line, settings)
                     dataset.set_data(s)
                     print(f'Parsing data at line {current_line}...')
                     s = input_file.readline().strip('\n')
@@ -166,8 +182,8 @@ def main(argv=None):
                                                 x(i), y(data[i], delta_energy, max_energy))
                 current = i
                 diagram += draw_bold_line(x(i), y(data[i], delta_energy, max_energy))
-                diagram += draw_text(str(data[i]), x(i) + length / 2, y(data[i], delta_energy, max_energy) - 5,
-                                     NUMBER_FONT, 10)
+                diagram += draw_text(f'%.{dataset.settings.decimal}f' % data[i], x(i) + length / 2,
+                                     y(data[i], delta_energy, max_energy) - 5, NUMBER_FONT, 10)
                 if dataset.labels is not None:
                     diagram += draw_text(str(dataset.labels[i]), x(i) + length / 2,
                                          y(data[i], delta_energy, max_energy) + 15, LABEL_FONT, 12, bold=True)

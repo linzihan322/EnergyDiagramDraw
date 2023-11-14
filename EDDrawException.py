@@ -27,6 +27,11 @@ class EDDrawPreambleParserException(EDDrawParserException):
         super().__init__('PreambleParserException', source_line, message)
 
 
+class EDDrawSettingsParserException(EDDrawParserException):
+    def __init__(self, source_line, message):
+        super().__init__('SettingsParserException', source_line, message)
+
+
 class EDDrawDataParserException(EDDrawParserException):
     def __init__(self, source_line, message):
         super().__init__('DataParserException', source_line, message)

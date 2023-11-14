@@ -6,6 +6,14 @@ from EDDrawException import EDDrawLabelParserException, EDDrawDataParserExceptio
 SKIP = -9999
 
 
+class Settings:
+    def __init__(self):
+        self.decimal = 1
+
+    def __str__(self):
+        return f'[decimal={self.decimal}]'
+
+
 class DataSet:
     data = []
     labels = None
@@ -14,8 +22,9 @@ class DataSet:
     min_energy = None
     delta_energy = None
 
-    def __init__(self, source_line):
+    def __init__(self, source_line, settings=Settings()):
         self.source_line = source_line
+        self.settings = settings
 
     def set_data(self, input_line: string):
         self.data = []
@@ -26,7 +35,7 @@ class DataSet:
                 self.data.append(SKIP)
             else:
                 try:
-                    value = float(s)
+                    value = round(float(s), self.settings.decimal)
                 except ValueError:
                     raise EDDrawDataParserException(self.source_line, f'''Invalid input '{s}'.
 --- You can only input floating-point numbers in this line.''')
