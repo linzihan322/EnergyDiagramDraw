@@ -104,13 +104,13 @@ def parse_settings(source_line, settings_str: str, current_settings: Settings) -
         if matches:
             settings.decimal = int(matches.group(1))
             continue
-        matches = re.match(r'labelnormal', s, re.I)
-        if matches:
-            settings.label_normal = True
+        matches = re.match(r'labelfont=(.+)', s, re.I)
+        if matches and (matches.group(1).lower() == 'bold' or matches.group(1).lower() == 'normal'):
+            settings.label_font = matches.group(1).lower()
             continue
-        matches = re.match(r'numberbold', s, re.I)
-        if matches:
-            settings.number_bold = True
+        matches = re.match(r'numberfont=(.+)', s, re.I)
+        if matches and (matches.group(1).lower() == 'bold' or matches.group(1).lower() == 'normal'):
+            settings.number_font = matches.group(1).lower()
             continue
         raise EDDrawSettingsParserException(source_line, f'''\'{s}' is not a valid setting.
 --- Please read 'README.md'.''')
@@ -200,11 +200,11 @@ def main(argv=None):
                 diagram += draw_bold_line(x(i), y(data[i], delta_energy, max_energy))
                 diagram += draw_text(f'%.{dataset.settings.decimal}f' % data[i], x(i) + length / 2,
                                      y(data[i], delta_energy, max_energy) - 5, NUMBER_FONT, 10,
-                                     bold=dataset.settings.number_bold)
+                                     bold=dataset.settings.number_font == 'bold')
                 if dataset.labels is not None:
                     diagram += draw_text(str(dataset.labels[i]), x(i) + length / 2,
                                          y(data[i], delta_energy, max_energy) + 15, LABEL_FONT, 12,
-                                         bold=not dataset.settings.label_normal)
+                                         bold=dataset.settings.label_font == 'bold')
 
         with open(output_filename, 'w') as output_file:
             output_file.write(f'''<?xml version="1.0" encoding="UTF-8" ?>
