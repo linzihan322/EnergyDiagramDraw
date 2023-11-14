@@ -108,6 +108,10 @@ def parse_settings(source_line, settings_str: str, current_settings: Settings) -
         if matches:
             settings.label_normal = True
             continue
+        matches = re.match(r'numberbold', s, re.I)
+        if matches:
+            settings.number_bold = True
+            continue
         raise EDDrawSettingsParserException(source_line, f'''\'{s}' is not a valid setting.
 --- Please read 'README.md'.''')
     print(f'Parsing settings at line {source_line}...')
@@ -195,7 +199,8 @@ def main(argv=None):
                 current = i
                 diagram += draw_bold_line(x(i), y(data[i], delta_energy, max_energy))
                 diagram += draw_text(f'%.{dataset.settings.decimal}f' % data[i], x(i) + length / 2,
-                                     y(data[i], delta_energy, max_energy) - 5, NUMBER_FONT, 10)
+                                     y(data[i], delta_energy, max_energy) - 5, NUMBER_FONT, 10,
+                                     bold=dataset.settings.number_bold)
                 if dataset.labels is not None:
                     diagram += draw_text(str(dataset.labels[i]), x(i) + length / 2,
                                          y(data[i], delta_energy, max_energy) + 15, LABEL_FONT, 12,

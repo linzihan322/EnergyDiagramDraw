@@ -9,10 +9,11 @@ SKIP = -9999
 class Settings:
     def __init__(self):
         self.decimal = 1
+        self.number_bold = False
         self.label_normal = False
 
     def __str__(self):
-        return f'[decimal={self.decimal} labelnormal={self.label_normal}]'
+        return f'[decimal={self.decimal} numberbold={self.number_bold} labelnormal={self.label_normal}]'
 
 
 class DataSet:
