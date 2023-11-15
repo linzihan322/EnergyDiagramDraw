@@ -127,6 +127,12 @@ def parse_settings(source_line, settings_str: str, current_settings: Settings) -
         if matches:
             settings.color = (float(matches.group(1)), float(matches.group(2)), float(matches.group(3)))
             continue
+        matches = re.match(r'color=([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})', s, re.I)
+        if matches:
+            settings.color = (round(int(matches.group(1), 16) / 255, 3),
+                              round(int(matches.group(2), 16) / 255, 3),
+                              round(int(matches.group(3), 16) / 255, 3))
+            continue
         raise EDDrawSettingsParserException(source_line, f'''\'{s}' is not a valid setting.
 --- Please read 'README.md'.''')
     print(f'Parsing settings at line {source_line}...')
