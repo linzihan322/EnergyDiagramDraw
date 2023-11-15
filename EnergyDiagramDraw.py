@@ -25,30 +25,41 @@ def y(data: float, delta: float, max: float) -> float:
     return round(padding + (max - data) * height / delta, 2)
 
 
-def draw_bold_line(x: float, y: float) -> str:
+def draw_bold_line(x: float, y: float, color: int = 0) -> str:
     return f'''<graphic
 BoundingBox="{x} {y} {x + length} {y}"
 LineType="Bold"
+color="{color}"
 GraphicType="Line" />
 '''
 
 
-def draw_dashed_line(x1: float, y1: float, x2: float, y2: float) -> str:
+def draw_dashed_line(x1: float, y1: float, x2: float, y2: float, color: int = 0) -> str:
     return f'''<graphic
 BoundingBox="{x1} {y1} {x2} {y2}"
 LineType="Dashed"
+color="{color}"
 GraphicType="Line" />
 '''
 
 
-def draw_text(text: str, x: float, y: float, font: int, size: int, bold: bool = False) -> str:
+def draw_text(text: str, x: float, y: float, font: int, size: int, bold: bool = False, color: int = 0) -> str:
     return f'''<t
  p="{x} {y}"
  CaptionJustification="Center"
  Justification="Center"
+ color="{color}"
  LineHeight="auto"
-><s font="{font}" size="{size}" color="0" {'face="1"' if bold else ''}>{text}</s></t>
+><s font="{font}" size="{size}" color="{color}" {'face="1"' if bold else ''}>{text}</s></t>
 '''
+
+
+def add_color(datasets: [DataSet]) -> str:
+    color_str = ''
+    for dataset in datasets:
+        color = dataset.settings.color
+        color_str += f'<color r="{color[0]}" g="{color[1]}" b="{color[2]}"/>\n'
+    return color_str
 
 
 def preamble(source_line, p: str):
@@ -111,6 +122,10 @@ def parse_settings(source_line, settings_str: str, current_settings: Settings) -
         matches = re.match(r'numberfont=(.+)', s, re.I)
         if matches and (matches.group(1).lower() == 'bold' or matches.group(1).lower() == 'normal'):
             settings.number_font = matches.group(1).lower()
+            continue
+        matches = re.match(r'color=\((0|1|0.\d{1,3}),(0|1|0.\d{1,3}),(0|1|0.\d{1,3})\)', s, re.I)
+        if matches:
+            settings.color = (float(matches.group(1)), float(matches.group(2)), float(matches.group(3)))
             continue
         raise EDDrawSettingsParserException(source_line, f'''\'{s}' is not a valid setting.
 --- Please read 'README.md'.''')
@@ -187,7 +202,8 @@ def main(argv=None):
 
         print('Generating energy diagram...')
         diagram = ''
-        for dataset in datasets:
+        for index in range(len(datasets)):
+            dataset = datasets[index]
             data = dataset.data
             current = -1
             for i in range(dataset.count):
@@ -195,16 +211,16 @@ def main(argv=None):
                     continue
                 if current != -1:
                     diagram += draw_dashed_line(x(current) + length, y(data[current], delta_energy, max_energy),
-                                                x(i), y(data[i], delta_energy, max_energy))
+                                                x(i), y(data[i], delta_energy, max_energy), color=10 + index)
                 current = i
-                diagram += draw_bold_line(x(i), y(data[i], delta_energy, max_energy))
+                diagram += draw_bold_line(x(i), y(data[i], delta_energy, max_energy), color=10 + index)
                 diagram += draw_text(f'%.{dataset.settings.decimal}f' % data[i], x(i) + length / 2,
                                      y(data[i], delta_energy, max_energy) - 5, NUMBER_FONT, 10,
-                                     bold=dataset.settings.number_font == 'bold')
+                                     bold=dataset.settings.number_font == 'bold', color=10 + index)
                 if dataset.labels is not None:
                     diagram += draw_text(str(dataset.labels[i]), x(i) + length / 2,
                                          y(data[i], delta_energy, max_energy) + 15, LABEL_FONT, 12,
-                                         bold=dataset.settings.label_font == 'bold')
+                                         bold=dataset.settings.label_font == 'bold', color=10 + index)
 
         with open(output_filename, 'w') as output_file:
             output_file.write(f'''<?xml version="1.0" encoding="UTF-8" ?>
@@ -219,6 +235,7 @@ def main(argv=None):
 <color r="0" g="1" b="1"/>
 <color r="0" g="0" b="1"/>
 <color r="1" g="0" b="1"/>
+{add_color(datasets)}
 </colortable><fonttable>
 <font id="{NUMBER_FONT}" charset="iso-8859-1" name="Arial"/>
 <font id="{LABEL_FONT}" charset="iso-8859-1" name="Times New Roman"/>

@@ -11,9 +11,10 @@ class Settings:
         self.decimal = 1
         self.number_font = 'normal'
         self.label_font = 'bold'
+        self.color = (0, 0, 0)
 
     def __str__(self):
-        return f'[decimal={self.decimal} numberfont={self.number_font} labelfont={self.label_font}]'
+        return f'[decimal={self.decimal} numberfont={self.number_font} labelfont={self.label_font} color={self.color}]'
 
 
 class DataSet:
