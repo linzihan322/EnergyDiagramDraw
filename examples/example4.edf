@@ -1,0 +1,19 @@
+%w=500
+%h=150
+%l=30
+%pd=50
+%reset
+
+#labelfont=normal color=(0,0.55,1)
+10.0,20.0,30.0,40.0,50.0
+you,can,skip,some,data
+
+#color=(1,0,0)
+,10.0,,-5.0,15.0,-5.0
+
+#numberfont=bold decimal=2 color=0094FF
+1,2,3,4,5,6,7
+Label,can,be,empty,,Like,this
+
+
+SOME COMMENTS...
