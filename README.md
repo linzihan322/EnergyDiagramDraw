@@ -68,11 +68,12 @@ Settings line start with a `#`, and all settings are written on the same line, s
 Setting lines are optional, so you can either omit this line entirely or simply write a `#`.
 The specific settings are as follows.
 
-| Setting    | Allowed values | Default | Note                   |
-|------------|----------------|---------|------------------------|
-| decimal=   | 0-9            | 1       | Set the decimal places |
-| numberfont | normal/bold    | normal  | Set the number font    |
-| labelfont  | normal/bold    | bold    | Set the label font     |
+| Setting     | Allowed values                                                                              | Default | Note                                            |
+|-------------|---------------------------------------------------------------------------------------------|---------|-------------------------------------------------|
+| decimal=    | 0-9                                                                                         | 1       | Set the decimal places                          |
+| numberfont= | normal/bold                                                                                 | normal  | Set the number font                             |
+| labelfont=  | normal/bold                                                                                 | bold    | Set the label font                              |
+| color=      | (r,g,b) where r,g,b is 0, 1 or 0.xxx (up to 3 decimals)<br>000000-FFFFFF (case insensitive) | (0,0,0) | Set the color of energy line, number and label) |
 
 Settings that do not appear in the setting statement remains unchanged.
 In other words, each setting will apply to all subsequent datasets.
