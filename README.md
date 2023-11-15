@@ -47,7 +47,7 @@ comments - you can write anything you like here
 ### Preamble
 
 Preamble can change property of diagram.
-Each preamble statement must be written on a separate line and start with a `%`. 
+Each preamble statement must be written on a separate line and start with a `%`.
 You can write them in any order, and omitted preamble statements will use default values.
 
 | Long format    | Short format | Default value | Note                                                                                      |
@@ -78,9 +78,9 @@ Settings that do not appear in the setting statement remains unchanged.
 In other words, each setting will apply to all subsequent datasets.
 This behavior can be altered by preamble statement `%reset`.
 
-This section contains one to three lines.
-The first line consists of data separated by commas.
-And the second line represents labels (which are optional).
+The line after setting statement consists of data separated by commas.
+And the next line represents labels (which are optional).
+You can also add spaces or tabs to align.
 In either the data or label lines, you can leave empty spaces to skip certain points.
 However, it’s essential to ensure that the number of labels corresponds exactly to the number of data points.
 
@@ -91,7 +91,7 @@ Remember to separate with blank lines.
 
 You can use two consecutive blank lines to mark the end position.
 The content after that will be ignored by the program and can be used to write comments, etc.
-If there is no additional content, you can even omit two blank lines
+If there is no additional content, you can even omit two blank lines.
 
 ## Simplest example
 
