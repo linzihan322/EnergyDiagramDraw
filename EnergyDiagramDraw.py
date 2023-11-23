@@ -1,5 +1,6 @@
 import re
 import sys
+import copy
 
 from DataSet import DataSet, SKIP, Settings
 from EDDrawException import *
@@ -108,7 +109,7 @@ def preamble(source_line, p: str):
 
 
 def parse_settings(source_line, settings_str: str, current_settings: Settings) -> Settings:
-    settings = current_settings
+    settings = copy.deepcopy(current_settings)
     splits = settings_str.removeprefix('#').split(' ')
     for s in splits:
         matches = re.match(r'decimal=(\d)', s, re.I)
